@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Box, Button, Container, Flex, Image, Stack, Text, VStack, Input, useToast } from "@chakra-ui/react";
 import { FaHeart, FaTimes } from "react-icons/fa";
 
+const userProfile = {
+  hobbies: ["Gaming", "Reading"],
+};
+
 const users = [
   {
     id: 1,
@@ -50,7 +54,11 @@ const Index = () => {
     }
 
     // Move to the next profile
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length);
+    setCurrentIndex((prevIndex) => {
+      const nextIndex = (prevIndex + 1) % users.length;
+      const sharedHobbies = users[nextIndex].hobbies.filter((hobby) => userProfile.hobbies.includes(hobby));
+      return sharedHobbies.length > 0 ? nextIndex : prevIndex;
+    });
   };
 
   return (
